@@ -21,7 +21,7 @@ const Modal = ({user}) => {
         }
         console.log(updateInfo)
 
-        fetch(`http://localhost:5000/user/${user._id}`, {
+        fetch(`https://task-server-pied-gamma.vercel.app/user/${user._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'

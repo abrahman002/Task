@@ -12,7 +12,7 @@ const Table = () => {
     const handleDelete = (id) => {
         const procced = confirm('are you sure delete this item');
         if (procced) {
-            fetch(`http://localhost:5000/user/${id}`, {
+            fetch(`https://task-server-pied-gamma.vercel.app/user/${id}`, {
                 method: 'DELETE',
             })
                 .then(res => res.json())
