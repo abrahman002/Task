@@ -1,27 +1,43 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-
+import Swal from 'sweetalert2';
+import UseUser from '../../Hook/UseUser/UseUser';
 
 const Form = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [refetch,users]=UseUser()
+    console.log(users)
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data.name)
-        
-        const name=data.name;
-        const email=data.email;
-        const phone=data.phone;
-        const userInfo={
-            name,email,phone
-        }
-        console.log(userInfo)
+        const name = data.name;
+        const email = data.email;
+        const phone = data.phone;
+        const userInfo = {
+            name, email, phone
+        };
 
-    
-        
+        fetch('http://localhost:5000/user', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    refetch(),
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Submitted Successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    
+                }
+            });
     };
-
-
-
-    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
         <div>
@@ -44,16 +60,15 @@ const Form = () => {
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="text"  {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
-                                    {errors.name && <span className='text-red-600'>! Email is required</span>}
+                                    <input type="text" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
+                                    {errors.email && <span className='text-red-600'>! Email is required</span>}
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Phone Number</span>
                                     </label>
                                     <input type="text" {...register("phone", { required: true })} name='phone' placeholder="Phone Number" className="input input-bordered" />
-                                    {errors.name && <span className='text-red-600'>! Phone Number is required</span>}
-
+                                    {errors.phone && <span className='text-red-600'>! Phone Number is required</span>}
                                 </div>
                                 <div className="form-control mt-6">
                                     <input type="submit" className="btn btn-primary" value="Submit" />

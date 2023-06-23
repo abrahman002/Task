@@ -1,6 +1,7 @@
 
 import './App.css'
 import Form from './Components/Form/Form'
+import Table from './Components/Table/Table'
 
 function App() {
 
@@ -12,6 +13,8 @@ function App() {
       </div>
       {/* form section */}
          <Form></Form>
+         {/* Table */}
+         <Table></Table>
     </div>
   )
 }
