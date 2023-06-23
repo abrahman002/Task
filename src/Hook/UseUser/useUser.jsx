@@ -12,7 +12,7 @@ const UseUser = () => {
         initialData:[]
         
       })
-      console.log(users)
+    //   console.log(users)
       return [refetch,users]
 };
 

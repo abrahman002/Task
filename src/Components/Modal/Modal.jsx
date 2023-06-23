@@ -7,6 +7,14 @@ const Modal = ({user}) => {
 
     const onSubmit = data => {
         console.log(data)
+
+        const name=data.name;
+        const email=data.email;
+        const phone=data.phone;
+        const updateInfo={
+            name,email,phone
+        }
+        console.log(updateInfo)
     }
     return (
         <div>
@@ -21,22 +29,22 @@ const Modal = ({user}) => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" {...register("name", { required: true })} name='name' defaultValue={user?.name}   placeholder="name" className="input input-bordered" />
-                                {errors.name && <span className='text-red-600'>! Name is required</span>}
+                                <input type="text" name='name' defaultValue={user?.name}   placeholder="name" className="input input-bordered" />
+                               
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
-                                {errors.email && <span className='text-red-600'>! Email is required</span>}
+                                <input type="text" name='email' placeholder="email" defaultValue={user?.email} className="input input-bordered" />
+                               
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Phone Number</span>
                                 </label>
-                                <input type="text" {...register("phone", { required: true })} name='phone' placeholder="Phone Number" className="input input-bordered" />
-                                {errors.phone && <span className='text-red-600'>! Phone Number is required</span>}
+                                <input type="text"  name='phone' defaultValue={user?.phone} placeholder="Phone Number" className="input input-bordered" />
+                                
                             </div>
                             <div className="form-control mt-6">
                                 <input type="submit" className="btn btn-primary" value="Submit" />
