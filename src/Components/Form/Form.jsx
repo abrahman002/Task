@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import UseUser from '../../Hook/UseUser/UseUser';
 
 const Form = () => {
-    const [refetch,users]=UseUser()
+    const [refetch,reset,users]=UseUser()
     console.log(users)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -60,7 +60,7 @@ const Form = () => {
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="text" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
+                                    <input type="email" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" required/>
                                     {errors.email && <span className='text-red-600'>! Email is required</span>}
                                 </div>
                                 <div className="form-control">

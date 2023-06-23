@@ -1,9 +1,14 @@
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import UseUser from '../../Hook/UseUser/UseUser';
+import { useEffect } from 'react';
+
 
 const Modal = ({user}) => {
+   const [refetch]=UseUser()
   
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register,reset, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = data => {
         console.log(data)
@@ -15,7 +20,36 @@ const Modal = ({user}) => {
             name,email,phone
         }
         console.log(updateInfo)
+
+        fetch(`http://localhost:5000/user/${user._id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.matchedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Successfully item update',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                }
+
+            })
     }
+
+    useEffect(()=>{
+         if(user){
+            reset(user)
+         }
+    },[user])
     return (
         <div>
             {/* Put this part before </body> tag */}
@@ -29,21 +63,21 @@ const Modal = ({user}) => {
                                 <label className="label">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input type="text" name='name' defaultValue={user?.name}   placeholder="name" className="input input-bordered" />
+                                <input type="text" name='name' {...register("name", { required: true })}    placeholder="name" className="input input-bordered" />
                                
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" name='email' placeholder="email" defaultValue={user?.email} className="input input-bordered" />
+                                <input type="text" name='email' {...register("email", { required: true })} placeholder="email"  className="input input-bordered" />
                                
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Phone Number</span>
                                 </label>
-                                <input type="text"  name='phone' defaultValue={user?.phone} placeholder="Phone Number" className="input input-bordered" />
+                                <input type="text"  name='phone'  {...register("phone", { required: true })}  placeholder="Phone Number" className="input input-bordered" />
                                 
                             </div>
                             <div className="form-control mt-6">

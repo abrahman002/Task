@@ -36,7 +36,7 @@ const Table = () => {
 
 
     return (
-        <div className="p-20">
+        <div className="lg:p-20">
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     {/* head */}
